@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "theme": "system",
+  "quality": "balanced",
+  "audioEnabled": true,
+  "autoConnectLastDevice": false,
+  "controlMode": "control",
+  "clipboardAutosync": false,
+  "window": {
+    "xDip": 100,
+    "yDip": 80,
+    "widthDip": 420,
+    "heightDip": 760,
+    "monitorId": null,
+    "alwaysOnTop": false
+  }
+}

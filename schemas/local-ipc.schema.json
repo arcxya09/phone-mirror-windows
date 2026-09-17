@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:phone-mirror-windows:ipc-command:1",
+  "title": "Core IPC command contract v1 (events are specified in the design)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["protocolVersion", "kind", "sessionId", "generation", "requestId", "method", "payload"],
+  "properties": {
+    "protocolVersion": {"const": 1},
+    "kind": {"const": "command"},
+    "sessionId": {"type": "string", "format": "uuid"},
+    "generation": {"type": "integer", "minimum": 1, "maximum": 2147483647},
+    "requestId": {"type": "string", "format": "uuid"},
+    "method": {"enum": ["Hello", "Stop", "SetControlMode", "InsertText", "SetAudioMuted", "SetDisplayPower", "SetWindowMode"]},
+    "inputSequence": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,19}$",
+      "description": "Runtime must also enforce UInt64 maximum and monotonic order."
+    },
+    "payload": {"type": "object"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"method": {"const": "Hello"}}},
+      "then": {
+        "properties": {"payload": {"type": "object", "additionalProperties": false, "maxProperties": 0}},
+        "not": {"required": ["inputSequence"]}
+      }
+    },
+    {
+      "if": {"properties": {"method": {"const": "Stop"}}},
+      "then": {
+        "properties": {"payload": {"type": "object", "additionalProperties": false, "maxProperties": 0}},
+        "not": {"required": ["inputSequence"]}
+      }
+    },
+    {
+      "if": {"properties": {"method": {"const": "SetControlMode"}}},
+      "then": {
+        "properties": {"payload": {
+          "type": "object", "additionalProperties": false,
+          "properties": {"mode": {"enum": ["control", "view-only"]}},
+          "required": ["mode"]
+        }},
+        "not": {"required": ["inputSequence"]}
+      }
+    },
+    {
+      "if": {"properties": {"method": {"const": "InsertText"}}},
+      "then": {
+        "properties": {"payload": {
+          "type": "object", "additionalProperties": false,
+          "properties": {
+            "text": {"type": "string", "minLength": 1, "maxLength": 16384, "x-maxUtf8Bytes": 16384},
+            "appendEnter": {"const": false}
+          },
+          "required": ["text", "appendEnter"]
+        }},
+        "required": ["inputSequence"]
+      }
+    },
+    {
+      "if": {"properties": {"method": {"const": "SetAudioMuted"}}},
+      "then": {
+        "properties": {"payload": {
+          "type": "object", "additionalProperties": false,
+          "properties": {"muted": {"type": "boolean"}}, "required": ["muted"]
+        }},
+        "not": {"required": ["inputSequence"]}
+      }
+    },
+    {
+      "if": {"properties": {"method": {"const": "SetDisplayPower"}}},
+      "then": {
+        "properties": {"payload": {
+          "type": "object", "additionalProperties": false,
+          "properties": {"power": {"enum": ["on", "off"]}}, "required": ["power"]
+        }},
+        "not": {"required": ["inputSequence"]}
+      }
+    },
+    {
+      "if": {"properties": {"method": {"const": "SetWindowMode"}}},
+      "then": {
+        "properties": {"payload": {
+          "type": "object", "additionalProperties": false,
+          "properties": {"fullScreen": {"type": "boolean"}, "alwaysOnTop": {"type": "boolean"}},
+          "required": ["fullScreen", "alwaysOnTop"]
+        }},
+        "not": {"required": ["inputSequence"]}
+      }
+    }
+  ]
+}

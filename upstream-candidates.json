@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-09-17",
+  "status": "design-candidates-not-built-or-device-tested",
+  "scrcpy": {
+    "tag": "v4.1",
+    "source": "https://github.com/Genymobile/scrcpy/releases/tag/v4.1",
+    "artifact": "scrcpy-win64-v4.1.zip",
+    "downloadVerified": false
+  },
+  "platformTools": {
+    "version": "37.0.1",
+    "source": "https://developer.android.com/tools/releases/platform-tools",
+    "downloadVerified": false
+  },
+  "releaseLock": false,
+  "notes": [
+    "Candidate metadata only, not a verified build lock.",
+    "Freeze client, server, patches and transitive dependencies together before building."
+  ]
+}

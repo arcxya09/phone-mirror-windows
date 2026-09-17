@@ -1,0 +1,13 @@
+{
+  "protocolVersion": 1,
+  "kind": "command",
+  "sessionId": "00000000-0000-4000-8000-000000000001",
+  "generation": 1,
+  "requestId": "00000000-0000-4000-8000-000000000002",
+  "method": "InsertText",
+  "inputSequence": "1",
+  "payload": {
+    "text": "示例文字\n第二行。",
+    "appendEnter": false
+  }
+}

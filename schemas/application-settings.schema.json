@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:phone-mirror-windows:settings:1",
+  "title": "Phone Mirror application settings v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "theme", "quality", "audioEnabled", "autoConnectLastDevice", "controlMode", "clipboardAutosync", "window"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "theme": {"enum": ["system", "light", "dark"]},
+    "quality": {"enum": ["smooth", "balanced", "clear"]},
+    "audioEnabled": {"type": "boolean"},
+    "autoConnectLastDevice": {"type": "boolean"},
+    "controlMode": {"enum": ["control", "view-only"]},
+    "clipboardAutosync": {"const": false},
+    "window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["xDip", "yDip", "widthDip", "heightDip", "monitorId", "alwaysOnTop"],
+      "properties": {
+        "xDip": {"type": "number"},
+        "yDip": {"type": "number"},
+        "widthDip": {"type": "number", "minimum": 240, "maximum": 16384},
+        "heightDip": {"type": "number", "minimum": 240, "maximum": 16384},
+        "monitorId": {"type": ["string", "null"], "maxLength": 256},
+        "alwaysOnTop": {"type": "boolean"}
+      }
+    }
+  }
+}
